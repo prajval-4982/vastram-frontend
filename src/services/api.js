@@ -63,17 +63,17 @@ export const authAPI = {
 // Services API
 export const servicesAPI = {
   getAll: async (params = {}) => {
-    const response = await api.get('/services', { params });
+    const response = await api.get('/api/services', { params });
     return response.data;
   },
 
   getCategories: async () => {
-    const response = await api.get('/services/categories');
+    const response = await api.get('/api/services/categories');
     return response.data;
   },
 
   getById: async (id) => {
-    const response = await api.get(`/services/${id}`);
+    const response = await api.get(`/api/services/${id}`);
     return response.data;
   },
 };
