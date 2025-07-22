@@ -1,0 +1,181 @@
+/* Gooey Navigation Styles */
+.gooey-nav-container {
+  position: relative;
+  width: 100%;
+  padding: 1rem 0;
+  --effect-opacity: 0.95;
+  --effect-scale: 1.3;
+  --particle-count: 20;
+}
+
+.gooey-nav-container nav {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.gooey-nav-container ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.gooey-nav-container li {
+  position: relative;
+  z-index: 3;
+}
+
+.gooey-nav-container a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 2rem;
+  display: block;
+  position: relative;
+  z-index: 4;
+  transition: color 0.3s ease;
+}
+
+.gooey-nav-container li a {
+  color: white;
+  position: relative;
+  z-index: 10;
+}
+
+.gooey-nav-container li.active a {
+  color: #3b82f6;
+  font-weight: 500;
+  position: relative;
+  z-index: 20;
+}
+
+/* Effect Elements */
+.effect {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 2rem;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.effect.filter {
+  background: white;
+  mix-blend-mode: overlay;
+  filter: blur(10px);
+  opacity: var(--effect-opacity, 0.95);
+  transform: scale(1);
+  will-change: transform, opacity;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.effect.text {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  z-index: 15;
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  will-change: transform, opacity;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.effect.text.active {
+  opacity: 1;
+  transform: scale(1.1);
+  color: #3b82f6;
+  text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+/* Particle Animation */
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity, filter;
+  animation: particle-animation var(--time, 1000ms) cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  box-shadow: 0 0 15px 3px currentColor;
+  opacity: 0;
+  animation-delay: var(--delay, 0ms);
+  transform-origin: center;
+  z-index: 5;
+  filter: brightness(1.5) contrast(1.5);
+  transition: all 0.3s ease-out;
+}
+
+.point {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: currentColor;
+  animation: point-animation var(--time, 1000ms) ease-out forwards;
+}
+
+@keyframes particle-animation {
+  0% {
+    transform: 
+      translate(
+        calc(var(--start-x, 0) * 1px), 
+        calc(var(--start-y, 0) * 1px)
+      ) 
+      rotate(0deg)
+      scale(1);
+    opacity: 0;
+    filter: brightness(1.5) contrast(1.5);
+  }
+  20% {
+    opacity: 1;
+    transform: 
+      translate(
+        calc((var(--start-x, 0) + var(--mid-x, 0) * 0.3) * 1px), 
+        calc((var(--start-y, 0) + var(--mid-y, 0) * 0.3) * 1px)
+      )
+      rotate(0deg)
+      scale(1.8);
+    filter: brightness(1.8) contrast(1.8);
+  }
+  50% {
+    opacity: 0.9;
+    transform: 
+      translate(
+        calc((var(--start-x, 0) + var(--mid-x, 0) * 0.7) * 1px), 
+        calc((var(--start-y, 0) + var(--mid-y, 0) * 0.7) * 1px)
+      )
+      rotate(180deg)
+      scale(1.5);
+    filter: brightness(1.5) contrast(1.5);
+  }
+  100% {
+    transform: 
+      translate(
+        calc(var(--end-x, 0) * 1px), 
+        calc(var(--end-y, 0) * 1px)
+      ) 
+      rotate(var(--rotate, 360deg))
+      scale(0.8);
+    opacity: 0;
+    filter: brightness(1) contrast(1);
+  }
+}
+
+@keyframes point-animation {
+  0%, 100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(var(--scale, 1));
+  }
+}
